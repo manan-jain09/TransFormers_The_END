@@ -160,7 +160,7 @@ function draw() {
     
   
     if(megaGroup.isTouching(optimus) || soundGroup.isTouching(optimus)){
-        sound.play(true);
+        sound.play();
         gameState = END;
       sound1.stop();
     }
