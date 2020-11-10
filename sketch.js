@@ -18,7 +18,6 @@ function preload(){
   backImg = loadImage("back.jpg");
   
   sound = loadSound("Megatron.mp3");
-  sound1 = loadSound("Transformers.mp3");
 
   megatron1 = loadImage("mega.jpg");
   megatron2 = loadImage("mega1.jpg");
@@ -36,8 +35,6 @@ function preload(){
 
 function setup() {
   var canvas = createCanvas(windowWidth, windowHeight);
-  
-  sound1.play(true);
   
   autobot = createSprite(width-50,100,10,10);
   autobot.addAnimation("autobot", autobotImg);
@@ -109,6 +106,7 @@ function draw() {
   gameOver.depth = back.depth + 1;
   
   if (gameState===PLAY){
+
     survival = survival + Math.round(getFrameRate()/60);   
     spawner = Math.round(random(8, 9));
     if(spawner === 8){
@@ -162,13 +160,12 @@ function draw() {
     if(megaGroup.isTouching(optimus) || soundGroup.isTouching(optimus)){
         sound.play();
         gameState = END;
-      sound1.stop();
     }
   }
   else if (gameState === END) {
     gameOver.visible = true;
     restart.visible = true;
-    
+     
     //set velcity of each game object to 0
     ground.velocityX = 0;
     optimus.velocityY = 0;
@@ -187,11 +184,15 @@ function draw() {
     }
   }
   drawSprites();
-  
+  textSize(20);
+  textAlign(CENTER);
+  fill("black");
+  text("If you will touch a Decepticon(SoundWave, SoundWave's vehicle mode, Megatron, Megatron's vehicle mode),You will die." , width / 2, height - 50);
+
 }
 
 function spawnMega() {
-  if(camera.position === 300) {
+  if(frameCount % 60 === 0) {
     megatron = createSprite(optimus.x + width - 100,optimus.y - 60,20,30);
     megatron.setCollider('rectangle',0,0,45, 200)
     //megatron.debug = true
@@ -218,7 +219,7 @@ function spawnMega() {
   }
 }
 function spawnSound() {
-  if(camera.position === 300) {
+  if(frameCount % 60 === 0) {
     soundWave = createSprite(optimus.x + width - 100,optimus.y - 60,20,30);
     soundWave.setCollider('rectangle',0,0,45, 200)
     //soundWave.debug = true
